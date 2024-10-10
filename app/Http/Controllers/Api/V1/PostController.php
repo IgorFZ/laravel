@@ -9,9 +9,11 @@ use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
 use App\Http\Resources\PostResource;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class PostController extends Controller
 {
+    use AuthorizesRequests;
     /**
      * Display a listing of the resource.
      */
@@ -41,9 +43,7 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        if (! Gate::allows('view', $post)) {
-            abort(403);
-        }
+
         return PostResource::make($post);
     }
 
@@ -52,10 +52,7 @@ class PostController extends Controller
      */
     public function update(UpdatePostRequest $request, Post $post)
     {
-        if (! Gate::allows('update', $post)) {
-            abort(403);
-        }
-
+        $this->authorize('update', $post);
         $validatedData = $request->validated();
         $post->update($validatedData);
 
@@ -87,4 +84,5 @@ class PostController extends Controller
 
         return PostResource::make($post);
     }
+
 }

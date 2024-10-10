@@ -14,11 +14,10 @@ class UserController extends Controller
 {
     public function register(RegisterUserRequest $request)
     {
-        $validatedData = $request->validate();
         $user = User::create([
-            'name' => $validatedData['name'],
-            'email' => $validatedData['email'],
-            'password' => Hash::make($validatedData['password']),
+            'name' => $request['name'],
+            'email' => $request['email'],
+            'password' => Hash::make($request['password']),
         ]);
 
         return UserResource::make($user);

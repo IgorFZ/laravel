@@ -14,7 +14,7 @@ Route::prefix('v1')->group(function () {
     });
 
     Route::apiResource('posts', PostController::class)->middleware('auth:sanctum');
-    Route::patch('/posts/{post}/status', [PostController::class, 'updateStatus'])->middleware('auth:sanctum');
+    Route::patch('/posts/{post}/status', [PostController::class])->middleware('auth:sanctum');
 });
 
 Route::get('/user', function (Request $request) {
